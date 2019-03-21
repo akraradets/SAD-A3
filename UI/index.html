@@ -167,17 +167,17 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal_search">Modal title</h5>
+            <h4 class="modal-title"></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <b>Address</b>
+            <p id="modal-addr"></p>
+            <b>Phone Number</b>
+            <p id="modal-phone"></p>
+            <a id="modal-url" href="">Google Map</a>
           </div>
         </div>
       </div>
@@ -186,10 +186,32 @@
     function search(){
       console.log("search ja");
       $("#modal_search").modal('show');
-      $("#input_search").val();
-        $.get("https://sad-assignment3.appspot.com/getPlace?input=FuturePark", function (data, status) {
-        alert("Data: " + data + "\nStatus: " + status);
+      var input_search = $("#input_search").val();
+      var url = "https://sad-assignment3.appspot.com/getPlace";
+      $.get(url, {input: input_search})
+      .done(function (res) {
+        console.log(res);
+        display(res);
+      })
+      .fail(function (res) {
+        console.log(res);
+        alert("error");
       });
+    }
+
+    function display(result){
+      // address: "ศูนย์บริการลูกค้า ทีโอที สาขาฟิวเจอร์พาร์ค รังสิต 94 Phahonyothin Rd, Tambon Prachathipat, Amphoe Thanyaburi, Chang Wat Pathum Thani 12130, Thailand"
+      // id: "ChIJ9Vd_1tiB4jARw5GN_6hzMwY"
+      // name: "ฟิวเจอร์พาร์ครังสิต"
+      // phoneNo: "092 740 8452"
+      // url: "https://maps.google.com/?cid=446827957718979011"
+      console.log(result.data.name);
+
+      $(".modal-title")[0].innerHTML = result.data.name;
+      $("#modal-addr")[0].innerHTML = result.data.address;
+      $("#modal-phone")[0].innerHTML = result.data.phoneNo;
+      $("#modal-url")[0].href = result.data.url;
+
     }
     </script>
 
