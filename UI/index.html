@@ -17,7 +17,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
@@ -38,8 +38,11 @@
 
     <div class="form-inline">
       <form class="form-inline">        
-        <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-        <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+        <input id="input_search" class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-success my-2 my-sm-0" onclick="search();">
+          <i class="fas fa-search"></i>
+        </button>
       </form>
     </div>  
     
@@ -158,7 +161,59 @@
       </li>
     </ul>
 
-  
+    <!-- Modal -->
+    <div class="modal fade" id="modal_search" tabindex="-1" role="dialog" aria-labelledby="modal_search"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <b>Address</b>
+            <p id="modal-addr"></p>
+            <b>Phone Number</b>
+            <p id="modal-phone"></p>
+            <a id="modal-url" href="">Google Map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    function search(){
+      console.log("search ja");
+      $("#modal_search").modal('show');
+      var input_search = $("#input_search").val();
+      var url = "https://sad-assignment3.appspot.com/getPlace";
+      $.get(url, {input: input_search})
+      .done(function (res) {
+        console.log(res);
+        display(res);
+      })
+      .fail(function (res) {
+        console.log(res);
+        alert("error");
+      });
+    }
+
+    function display(result){
+      // address: "ศูนย์บริการลูกค้า ทีโอที สาขาฟิวเจอร์พาร์ค รังสิต 94 Phahonyothin Rd, Tambon Prachathipat, Amphoe Thanyaburi, Chang Wat Pathum Thani 12130, Thailand"
+      // id: "ChIJ9Vd_1tiB4jARw5GN_6hzMwY"
+      // name: "ฟิวเจอร์พาร์ครังสิต"
+      // phoneNo: "092 740 8452"
+      // url: "https://maps.google.com/?cid=446827957718979011"
+      console.log(result.data.name);
+
+      $(".modal-title")[0].innerHTML = result.data.name;
+      $("#modal-addr")[0].innerHTML = result.data.address;
+      $("#modal-phone")[0].innerHTML = result.data.phoneNo;
+      $("#modal-url")[0].href = result.data.url;
+
+    }
+    </script>
 
 </body>
 
