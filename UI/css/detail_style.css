@@ -1,0 +1,41 @@
+
+
+*{
+    margin:0;
+    padding:0;
+  }
+
+  body{
+    font-family:cursive,sans-serif;
+    font-size:100%;
+    color: black;
+    margin:3em;
+    background-color: #e06900;
+    background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    
+  }
+
+  .img-border {
+    border: 3px solid #ddd;
+    border-radius: 20px;
+    padding: 5px;
+    width: 520px;
+  }
+
+  .img {
+    width: 500px;
+    border-radius: 20px;
+  }
+
+  h2,p{
+    font-size:100%;
+    font-weight:normal;
+    color: black;
+  }
+
+  .description {
+    margin-left: 200px; 
+    margin-right: 200px;
+  }
+  
