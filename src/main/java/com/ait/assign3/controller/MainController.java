@@ -58,30 +58,34 @@ public class MainController {
 		return "food_form";
 	}
 
-	// click create new food button, it will return the detail food page with list
+	// click create new food button, it will return the detail food page with
+	// list
 	// of ingredient
 	@RequestMapping(value = "/addFood", method = RequestMethod.POST)
-	public String submitFood(@Valid @ModelAttribute("foodMapper") FoodMapper foodMapper, BindingResult result,
-			ModelMap model) {
+	public String submitFood(
+			@Valid @ModelAttribute("foodMapper") FoodMapper foodMapper,
+			BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "error";
 		}
 
 		// declare variable for compose filename
 		UUID uuid = UUID.randomUUID();
+		String filePath = "";
 		String fileName = "";
-
 		MultipartFile file = foodMapper.getFile();
 		if (!file.isEmpty()) {
 
 			try {
 				// compose file name
-
-				fileName = UPLOADED_FOLDER + uuid.toString() + "."
-						+ FilenameUtils.getExtension(file.getOriginalFilename());
+				fileName = uuid.toString()
+						+ "."
+						+ FilenameUtils
+								.getExtension(file.getOriginalFilename());
+				filePath = UPLOADED_FOLDER + fileName;
 				// Get the file and save it somewhere
 				byte[] bytes = file.getBytes();
-				Path path = Paths.get(fileName);
+				Path path = Paths.get(filePath);
 				Files.write(path, bytes);
 
 			} catch (IOException e) {
@@ -101,7 +105,8 @@ public class MainController {
 		model.addAttribute("food", foodNew);
 
 		foodIngredientRepository = new FoodIngredientRepository();
-		ArrayList<FoodIngredient> listIn = foodIngredientRepository.findAllByFoodId(foodId);
+		ArrayList<FoodIngredient> listIn = foodIngredientRepository
+				.findAllByFoodId(foodId);
 
 		model.addAttribute("listIngre", listIn);
 
@@ -117,7 +122,8 @@ public class MainController {
 		model.addAttribute("food", food);
 
 		foodIngredientRepository = new FoodIngredientRepository();
-		ArrayList<FoodIngredient> listIn = foodIngredientRepository.findAllByFoodId(food.getId());
+		ArrayList<FoodIngredient> listIn = foodIngredientRepository
+				.findAllByFoodId(food.getId());
 		model.addAttribute("listIngre", listIn);
 
 		// this is jsp file name
@@ -130,13 +136,13 @@ public class MainController {
 		System.out.println("step >>>>X 1");
 		FoodIngredient foodIngredient = new FoodIngredient();
 		foodIngredient.setFood_id(id);
-		// FoodIngredientMapper foodIngredientMapper = new FoodIngredientMapper();
+		// FoodIngredientMapper foodIngredientMapper = new
+		// FoodIngredientMapper();
 		// foodIngredientMapper.setFood_id(Integer.toString(id));
-		
+
 		ingredientRepository = new IngredientRepository();
 		model.addAttribute("ingredients", ingredientRepository.findAll());
-		
-		
+
 		model.addAttribute("foodIngre", foodIngredient);
 		System.out.println("step >>>>X 2");
 		// this is jsp file name
@@ -144,18 +150,19 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/addIngredient", method = RequestMethod.POST)
-	public String submitIngredient(@Valid @ModelAttribute("foodIngre") FoodIngredient foodIngredient,
+	public String submitIngredient(
+			@Valid @ModelAttribute("foodIngre") FoodIngredient foodIngredient,
 			BindingResult result, ModelMap model) {
 		System.out.println("step >>>>1");
 		if (result.hasErrors()) {
 			return "error";
 		}
 
-
 		ingredientRepository = new IngredientRepository();
-		Ingredient  ingredient = ingredientRepository.findOneByCode(foodIngredient.getCode());
+		Ingredient ingredient = ingredientRepository
+				.findOneByCode(foodIngredient.getCode());
 		foodIngredient.setName(ingredient.getName());
-		
+
 		System.out.println("step >>>>2");
 		foodRepository = new FoodRepository();
 		Food foodNew = foodRepository.findOneById(foodIngredient.getFood_id());
@@ -166,7 +173,8 @@ public class MainController {
 		foodIngredientRepository = new FoodIngredientRepository();
 		foodIngredientRepository.save(foodIngredient);
 		System.out.println("step >>>>4");
-		ArrayList<FoodIngredient> listIn = foodIngredientRepository.findAllByFoodId(foodIngredient.getFood_id());
+		ArrayList<FoodIngredient> listIn = foodIngredientRepository
+				.findAllByFoodId(foodIngredient.getFood_id());
 
 		model.addAttribute("listIngre", listIn);
 		System.out.println("step >>>>5");
@@ -174,7 +182,10 @@ public class MainController {
 	}
 
 	@RequestMapping("/delete/{id}")
-	public String deleteFood(@PathVariable("id") int id, Model model) { // memoRepository = new MemoRepository(); //
+	public String deleteFood(@PathVariable("id") int id, Model model) { // memoRepository
+																		// = new
+																		// MemoRepository();
+																		// //
 
 		foodRepository = new FoodRepository();
 		foodRepository.delete(id); // return null;
@@ -186,7 +197,8 @@ public class MainController {
 	}
 
 	@RequestMapping("/deleteIngre/{id1}/{id2}")
-	public String deleteIngre(@PathVariable("id1") int foodId, @PathVariable("id2") int ingreId, Model model) {
+	public String deleteIngre(@PathVariable("id1") int foodId,
+			@PathVariable("id2") int ingreId, Model model) {
 		// memoRepository = new MemoRepository(); //
 
 		foodIngredientRepository = new FoodIngredientRepository();
@@ -198,5 +210,5 @@ public class MainController {
 		// this is jsp file name
 		return "redirect:" + "/viewFood/" + foodId;
 	}
-//		return "food_detail";
+	// return "food_detail";
 }
