@@ -38,4 +38,12 @@
     margin-left: 200px; 
     margin-right: 200px;
   }
-  
+
+  .card {
+    padding: 5px;
+  }
+
+  .list-ingredient {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
