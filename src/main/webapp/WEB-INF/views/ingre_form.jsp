@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +23,9 @@
 
 
 
-		<td><form:input path="food_id" /></td>
+		<td><form:input type="hidden" path="food_id" /></td>
 		<table>
-			<tr>
-				<td><form:label path="name">Name</form:label></td>
-				<td><form:input path="name" /></td>
-			</tr>
+
 			<tr>
 				<td><form:label path="unit">unit</form:label></td>
 				<td><form:input path="unit" /></td>
@@ -34,7 +33,13 @@
 			<tr>
 				<td><form:label path="code">
                       code</form:label></td>
-				<td><form:input path="code" /></td>
+				<td><form:select path="code">
+						<c:forEach var="item" items="${ingredients}">
+							<form:option value="${item.code}" label="${item.name}" />
+						</c:forEach>
+
+					</form:select></td>
+
 			</tr>
 
 			<tr>

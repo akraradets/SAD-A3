@@ -24,6 +24,7 @@ import com.ait.assign3.model.Food;
 import com.ait.assign3.model.FoodIngredient;
 import com.ait.assign3.model.FoodIngredientMapper;
 import com.ait.assign3.model.FoodMapper;
+import com.ait.assign3.model.Ingredient;
 import com.ait.assign3.repository.FoodIngredientRepository;
 import com.ait.assign3.repository.FoodRepository;
 import com.ait.assign3.repository.IngredientRepository;
@@ -131,7 +132,11 @@ public class MainController {
 		foodIngredient.setFood_id(id);
 		// FoodIngredientMapper foodIngredientMapper = new FoodIngredientMapper();
 		// foodIngredientMapper.setFood_id(Integer.toString(id));
-
+		
+		ingredientRepository = new IngredientRepository();
+		model.addAttribute("ingredients", ingredientRepository.findAll());
+		
+		
 		model.addAttribute("foodIngre", foodIngredient);
 		System.out.println("step >>>>X 2");
 		// this is jsp file name
@@ -146,12 +151,11 @@ public class MainController {
 			return "error";
 		}
 
-		// FoodIngredient foodIngredient = new FoodIngredient();
-		// foodIngredient.setName(foodIngredientMapper.getName());
-		// foodIngredient.setUnit(Integer.parseInt(foodIngredientMapper.getUnit()) );
-		// foodIngredient.setUnit(Integer.parseInt(foodIngredientMapper.getFood_id()));
-		// foodIngredient.setCode(foodIngredientMapper.getCode());
 
+		ingredientRepository = new IngredientRepository();
+		Ingredient  ingredient = ingredientRepository.findOneByCode(foodIngredient.getCode());
+		foodIngredient.setName(ingredient.getName());
+		
 		System.out.println("step >>>>2");
 		foodRepository = new FoodRepository();
 		Food foodNew = foodRepository.findOneById(foodIngredient.getFood_id());
@@ -178,7 +182,21 @@ public class MainController {
 		ArrayList<Food> list = foodRepository.findAll();
 		model.addAttribute("foods", list);
 		// this is jsp file name
-		return "index";
+		return "redirect:" + "/";
 	}
 
+	@RequestMapping("/deleteIngre/{id1}/{id2}")
+	public String deleteIngre(@PathVariable("id1") int foodId, @PathVariable("id2") int ingreId, Model model) {
+		// memoRepository = new MemoRepository(); //
+
+		foodIngredientRepository = new FoodIngredientRepository();
+		foodIngredientRepository.delete(ingreId); // return null
+		;
+		// Memo memo = memoRepository.findOneById(1);
+		ArrayList<Food> list = foodRepository.findAll();
+		model.addAttribute("foods", list);
+		// this is jsp file name
+		return "redirect:" + "/viewFood/" + foodId;
+	}
+//		return "food_detail";
 }

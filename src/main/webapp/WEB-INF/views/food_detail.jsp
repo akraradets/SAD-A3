@@ -39,29 +39,27 @@
 
 	</c:forEach>
 	 -->
-	 <a href="../">back to home page</a>
+	<a href="../">back to home page</a>
 	<h1>Your name : ${food.name}</h1>
 	<H3>description : ${food.description}</H3>
 
 
+	<h1>+++ LIST OF INGREDIENT +++</h1>
+
+	<c:forEach items="${listIngre}" var="item">
+
+		<h3>
+			Your name : ${item.name}
+			</h1>
+			<H3>THE TOPIC : ${item.unit}</H3>
+			<H3>THE CODE : ${item.code}</H3>
+
+
+			<a href="/deleteIngre/${food.id}/${item.id}">delete</a>
+	</c:forEach>
+
 	<h1>
-		+++ LIST OF INGREDIENT +++
-		</h1>
-
-		<c:forEach items="${listIngre}" var="item">
-
-			<h3>
-				Your name : ${item.name}
-				</h1>
-				<H3>THE TOPIC : ${item.unit}</H3>
-				<H3>THE DETAIL : ${item.code}</H3>
-				<H3>THE DETAIL : ${item.food_id}</H3>
-
-				<a href="/delete/${item.id}">delete</a>
-		</c:forEach>
-
-		<h1>
-			<a href="/foodIngredient/${food.id}">add ingredient</a>
-		</h1>
+		<a href="/foodIngredient/${food.id}">add ingredient</a>
+	</h1>
 </body>
 </html>
