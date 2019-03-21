@@ -25,8 +25,11 @@
 		<H3>THE TOPIC : ${item.description}</H3>
 		<H3>THE DETAIL : ${item.image_path}</H3>
 
-		<a href="/viewFood/${item.id}">delete</a>
-		<a href="/delete/${item.id}">delete</a>
+		<img src="file:/${item.image_path}">
+
+
+		<a href="/viewFood/${item.id}">view</a>
+		<a href="delete/${item.id}">delete</a>
 
 	</c:forEach>
 
