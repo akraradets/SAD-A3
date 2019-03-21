@@ -16,7 +16,8 @@
 	<h1>Spring Boot - MVC web application example</h1>
 	<hr>
 
-	<form:form method="POST" action="addFood" modelAttribute="food">
+	<form:form method="POST" action="addFood" modelAttribute="foodMapper"
+		enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td><form:label path="name">Name</form:label></td>
@@ -27,9 +28,9 @@
 				<td><form:input path="description" /></td>
 			</tr>
 			<tr>
-				<td><form:label path="image_path">
+				<td><form:label path="file">
                       image_path</form:label></td>
-				<td><form:input path="image_path" /></td>
+				<td><form:input type="file" path="file" /></td>
 			</tr>
 
 			<tr>
