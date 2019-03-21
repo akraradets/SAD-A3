@@ -20,6 +20,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- For tooltip -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip(
+          {container:'body', trigger: 'hover', placement:"right"}
+          );   
+      });
+  </script>
 </head>
 
 <body>
@@ -62,23 +70,38 @@
     <div class="card" >
       <h3 class="card-title"><i class="fas fa-clipboard-list"></i> <b>Ingredients :</b> </h3>      
       <div class="card-body">
-        <p class="card-text">
-          <div class="list-ingredient" > 
-            <ol>
-                <li>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label> Chicken </label>
-                        </div>
-                        
-                        <div class="col-sm-4">
-                            <label> 100 g. </label>
-                        </div>
-                    </div>
-                </li> 
-            </ol>
-          </div>
-        </p>
+            <!-- list of ingredients. -->
+              <ol style="margin-left: 50px;">
+                  <li>
+                    <!-- Each item of ingredients. -->
+                        <div class="row" >
+                          <!-- Name of item. -->
+                                    <div class="col-sm-5">
+                                        <label> Chicken </label>
+                                    </div>
+                                    
+                                    <!-- Unit. -->
+                                    <div class="col-sm-2">
+                                        <label> 100 g. </label>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="col-sm-4">
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove!">
+                                          <i class="fas fa-times"></i>
+                                        </button>     
+                                    </div>
+                                </div>
+                      <!-- End list of ingredients. -->
+                      <br>
+                    </li> 
+                </ol>
+
+                <footer >
+                  <button type="button" class="btn btn-outline-secondary">
+                    <i class="fas fa-plus-circle"></i> Add more ingredeient.
+                  </button>
+                </footer>
       </div>
     </div>
     <!-- End ingredent. -->
