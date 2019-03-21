@@ -12,4 +12,5 @@
 */
 
 $router->get('/', 'CalController@cal');
+$router->get('/getPlace', 'CalController@getPlace');
 $router->post('/', 'CalController@cal');
