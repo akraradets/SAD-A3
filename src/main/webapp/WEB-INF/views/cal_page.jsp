@@ -44,22 +44,13 @@
 	<H3>description : ${food.description}</H3>
 
 
-	<h1>+++ LIST OF INGREDIENT +++</h1>
-
-	<c:forEach items="${listIngre}" var="item">
-
-		<h3>
-			Your name : ${item.name}
-			</h1>
-			<H3>THE unit : ${item.unit}</H3>
-			<H3>THE CODE : ${item.code}</H3>
+	<h1>Cal : ${cal}</h1>
 
 
-			<a href="/deleteIngre/${food.id}/${item.id}">delete</a>
-	</c:forEach>
 
-	<h1>
-		<a href="/foodIngredient/${food.id}">add ingredient</a>
-	</h1>
+
+
+
+
 </body>
 </html>

@@ -5,11 +5,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,9 +37,18 @@ import com.ait.assign3.model.FoodIngredient;
 import com.ait.assign3.model.FoodIngredientMapper;
 import com.ait.assign3.model.FoodMapper;
 import com.ait.assign3.model.Ingredient;
+import com.ait.assign3.model.IngredientObject;
+import com.ait.assign3.model.ResponseObject;
 import com.ait.assign3.repository.FoodIngredientRepository;
 import com.ait.assign3.repository.FoodRepository;
 import com.ait.assign3.repository.IngredientRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.mysql.cj.ParseInfo;
 
 @Controller
@@ -132,11 +153,10 @@ public class MainController {
 		foodIngredient.setFood_id(id);
 		// FoodIngredientMapper foodIngredientMapper = new FoodIngredientMapper();
 		// foodIngredientMapper.setFood_id(Integer.toString(id));
-		
+
 		ingredientRepository = new IngredientRepository();
 		model.addAttribute("ingredients", ingredientRepository.findAll());
-		
-		
+
 		model.addAttribute("foodIngre", foodIngredient);
 		System.out.println("step >>>>X 2");
 		// this is jsp file name
@@ -151,11 +171,10 @@ public class MainController {
 			return "error";
 		}
 
-
 		ingredientRepository = new IngredientRepository();
-		Ingredient  ingredient = ingredientRepository.findOneByCode(foodIngredient.getCode());
+		Ingredient ingredient = ingredientRepository.findOneByCode(foodIngredient.getCode());
 		foodIngredient.setName(ingredient.getName());
-		
+
 		System.out.println("step >>>>2");
 		foodRepository = new FoodRepository();
 		Food foodNew = foodRepository.findOneById(foodIngredient.getFood_id());
@@ -198,5 +217,74 @@ public class MainController {
 		// this is jsp file name
 		return "redirect:" + "/viewFood/" + foodId;
 	}
+
+	@RequestMapping("/getCal/{id}")
+	public String getCal(@PathVariable("id") int id, Model model) {
+		ArrayList<IngredientObject> list = new ArrayList<IngredientObject>();
+
+		foodIngredientRepository = new FoodIngredientRepository();
+
+		ArrayList<FoodIngredient> listIn = foodIngredientRepository.findAllByFoodId(id);
+		/*
+		 * for (FoodIngredient foodIngredient : listIn) { IngredientObject
+		 * ingredientObject = new IngredientObject();
+		 * 
+		 * ingredientObject.setCode(foodIngredient.getCode());
+		 * ingredientObject.setUnit(ingredientObject.getUnit());
+		 * 
+		 * list.add(ingredientObject); }
+		 */
+
+		JSONArray jr = new JSONArray();
+		for (FoodIngredient foodIngredient : listIn) {
+
+			JSONObject obj = new JSONObject();
+			obj.put("code", foodIngredient.getCode());
+			obj.put("unit", foodIngredient.getUnit());
+			jr.put(obj);
+
+		}
+
+		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+		JSONArray jsArray = new JSONArray(jr.toString());
+		System.out.println(jsArray.toString());
+		// System.out.println(json);
+		try {
+			HttpPost request = new HttpPost("https://sad-assignment3.appspot.com/");
+			StringEntity params = new StringEntity(jsArray.toString());
+			request.addHeader("content-type", "application/json");
+			request.setEntity(params);
+			HttpResponse response = httpClient.execute(request);
+			HttpEntity responseEntity = response.getEntity();
+			String str = "";
+			if (responseEntity != null) {
+				str = EntityUtils.toString(responseEntity);
+			}
+
+			foodRepository = new FoodRepository();
+			Food foodNew = foodRepository.findOneById(id);
+
+			model.addAttribute("food", foodNew);
+
+			Gson gson = new Gson();
+			JsonParser parser = new JsonParser();
+			JsonObject object = (JsonObject) parser.parse(str);// response will be the json String
+			ResponseObject responseObject = gson.fromJson(object, ResponseObject.class);
+
+			model.addAttribute("cal", responseObject.getCal());
+			httpClient.close();
+			return "cal_page";
+
+			// handle response here...
+		} catch (Exception ex) {
+			// handle exception here
+			ex.printStackTrace();
+		} finally {
+
+		}
+		return null;
+
+	}
+
 //		return "food_detail";
 }
