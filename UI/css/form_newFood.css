@@ -1,15 +1,26 @@
 .form-group {
 	padding-left: 200px;
 	padding-right: 200px;
+	text-align: left;
+}
+
+.list-ingredient {
+	padding-left: 200px;
+	padding-right: 200px;
 }
 
 body{
     font-family:cursive,sans-serif;
     font-size:100%;
+
     color: black;
     margin:3em;
     background-color: #e09143;
     background-image: url("https://www.transparenttextures.com/patterns/food.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */    
+  }
+
+  ol {
+  	padding-left: 200px;
   }
 
