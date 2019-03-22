@@ -16,6 +16,10 @@ class CalController extends Controller
         //
     }
 
+    public function test(Request $request){
+        return $request->all();
+    }
+
     /**
      * Update the specified user.
      *
@@ -30,17 +34,19 @@ class CalController extends Controller
             "msg" => "",
             "cal" => ""
         );
-        if(empty($request->input("code"))){
-            $returnArray["msg"] = "<code> is empty";
-            return $returnArray;
+        $inputArray = $request->all();
+        $cal = 0;
+        foreach ($inputArray as $ingred) {
+            if(empty($ingred["code"])){
+                $returnArray["msg"] = "<code> is empty";
+                return $returnArray;
+            }
+            if(empty($ingred["unit"])){
+                $returnArray["msg"] = "<unit> is empty";
+                return $returnArray;
+            }
+            $cal = $cal + (strrev($ingred["code"]) * $ingred["unit"]);
         }
-        if(empty($request->input("unit"))){
-            $returnArray["msg"] = "<unit> is empty";
-            return $returnArray;
-        }
-        $code = $request->input("code");
-        $unit = $request->input("unit");
-        $cal = strrev($code) * $unit;
         $returnArray["code"] = "0";
         $returnArray["cal"] = $cal;
         return $returnArray;
