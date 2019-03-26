@@ -87,6 +87,9 @@
 			              	  <a type="button" class="btn btn-info" href="/viewFood/${item.id}">
 			              	  		<i class="fas fa-search-plus"></i> Read more...
 		           	  		  </a>
+		           	  		  <a type="button" class="btn btn" href="/getCal/${item.id}">
+		           	  		  		<i class="fas fa-weight"></i> All Calories.
+           	  		  		  </a>
 			                  <!-- <button type="button" class="btn btn-info"><i class="fas fa-search-plus"></i> Read more...</button>  -->
 			              </div>
 		            </div>
