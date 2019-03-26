@@ -83,7 +83,7 @@
          <i class="fas fa-grin-stars"></i> 
       </h1> 
    		 <a type="button" class="btn btn-warning" href="../">back to home page</a>
-  </center>
+  	</center>
 
   <br>
 

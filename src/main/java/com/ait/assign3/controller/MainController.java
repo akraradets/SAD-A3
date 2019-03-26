@@ -235,7 +235,7 @@ public class MainController {
 
 
 	@RequestMapping("/getCal/{id}")
-	public String getCal(@PathVariable("id") int id, Model model) {
+	public String getCal(@PathVariable("id") int id, Model model) throws Exception{
 		ArrayList<IngredientObject> list = new ArrayList<IngredientObject>();
 
 		foodIngredientRepository = new FoodIngredientRepository();
