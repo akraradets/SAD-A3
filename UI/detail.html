@@ -20,12 +20,24 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- For tooltip -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip(
+          {container:'body', trigger: 'hover', placement:"right"}
+          );   
+      });
+  </script>
 </head>
 
 <body>
 
   <center>
-      <h1 class="text-center"><i class="fas fa-grin-alt"></i>. <b>Name of Food</b> .<i class="fas fa-grin-alt"></i></h1>      
+      <h1 class="text-center">
+         <i class="fas fa-grin-stars"></i>
+         <b>Name of Food</b>
+         <i class="fas fa-grin-stars"></i> 
+      </h1> 
   </center>
 
   <br>
@@ -36,25 +48,66 @@
       </div>
   </center>
   
+
   <br>
 
-  <div class="description">
-    <h3><i class="fas fa-file-alt"></i> <b>Description.</b> </h3>
+  <div class="description">   
 
-    <p> &nbsp; &nbsp; &nbsp;
+    <!-- For description -->
+    <div class="card" >
+      <h3 class="card-title"><i class="fas fa-bullhorn"></i></i> <b>Description :</b> </h3>      
+      <div class="card-body">
+        <p class="card-text"> &nbsp; &nbsp; &nbsp;
         This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
         This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
         This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-    </p>
+        </p>
+      </div>
+    </div>
+    <!-- End description. -->
+    <br> 
+    <!-- Ingredient. -->
+    <div class="card" >
+      <h3 class="card-title"><i class="fas fa-clipboard-list"></i> <b>Ingredients :</b> </h3>      
+      <div class="card-body">
+            <!-- list of ingredients. -->
+              <ol style="margin-left: 50px;">
+                  <li>
+                    <!-- Each item of ingredients. -->
+                        <div class="row" >
+                          <!-- Name of item. -->
+                                    <div class="col-sm-5">
+                                        <label> Chicken </label>
+                                    </div>
+                                    
+                                    <!-- Unit. -->
+                                    <div class="col-sm-2">
+                                        <label> 100 g. </label>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="col-sm-4">
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove!">
+                                          <i class="fas fa-times"></i>
+                                        </button>     
+                                    </div>
+                                </div>
+                      <!-- End list of ingredients. -->
+                      <br>
+                    </li> 
+                </ol>
+
+                <footer >
+                  <button type="button" class="btn btn-outline-secondary">
+                    <i class="fas fa-plus-circle"></i> Add more ingredeient.
+                  </button>
+                </footer>
+      </div>
+    </div>
+    <!-- End ingredent. -->
+    
   </div>
-
   
-
-  <br>
-  
-  <p>
-    Ingredient.
-  </p>
 
 </body>
 
