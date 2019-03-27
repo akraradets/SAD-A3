@@ -46,7 +46,7 @@
     <!-- 	<img class="img" src="resources/picture/kapao.jpg" alt="Card image cap">  -->
 
 	<center>
-      <h1 class="text-center"><i class="fas fa-utensils"></i> <b>Food</b></h1>
+      <h1 class="text-center"><i class="fas fa-utensils"></i> <b>KalolLie</b></h1>
       <a href="/formFood" type="button" class="btn btn-warning" ><i class="fas fa-plus-circle"></i> Create new Food</a>
    	</center>
 
@@ -55,8 +55,9 @@
 
 
     <div class="form-inline">
-      <form class="form-inline">        
-        <input id="input_search" class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
+      <form class="form-inline">
+        <label>Search for place to eat</label>
+        <input id="input_search" class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-success my-2 my-sm-0" onclick="search();">
           <i class="fas fa-search"></i>
