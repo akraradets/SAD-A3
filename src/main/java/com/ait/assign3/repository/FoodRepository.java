@@ -71,7 +71,7 @@ public class FoodRepository {
 		ArrayList<Food> foodList = new ArrayList<Food>();
 
 		try {
-			ps = conn.prepareStatement("select id, name, description,image_path from food");
+			ps = conn.prepareStatement("select id, name, description,image_path from food order by id DESC");
 
 			rs = ps.executeQuery();
 
